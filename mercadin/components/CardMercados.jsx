@@ -1,27 +1,34 @@
 import { Text, StyleSheet, View, Image } from "react-native"
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function CardProdutos(props){
+export default function CardMercado(props){
    return (
-    <View style={styles.container}>
-       <View style={styles.innerContainer}>
-        <View style={styles.iconContainer}>
-                <Image style={styles.icon} source={props.icon}></Image>
-            </View>
-        
-            <View style={styles.informationContainer}>
-                <Text style={styles.mercado}>{props.mercado}</Text>
-                <Text style={styles.endereco}>{props.endereco}</Text>
-                <Text style={styles.produto}>{props.produto}</Text>
-                <Text style={styles.value}>R$ {props.value}</Text>
-            </View>
+    <View style={styles.Outercontainer}>
+        <Text style={styles.titulo}>Mercados por ordem de mais barato</Text>
+        <View style={styles.container}>
+            
+        <View style={styles.innerContainer}>
+            <View style={styles.iconContainer}>
+                    <Image style={styles.icon} source={props.icon}></Image>
+                </View>
+            
+                <View style={styles.informationContainer}>
+                    <Text style={styles.mercado}>{props.mercado}</Text>
+                    <Text style={styles.endereco}>{props.endereco}</Text>
+                    <Text style={styles.economize}>Economize até {props.economize}%</Text>
+                    
+                </View>
 
-        </View>
-       
+            </View>
+        </View>   
     </View>
    )
 }
 const styles = StyleSheet.create({
+    Outercontainer: {
+        flexDirection: "column",
+        flexWrap: 'wrap',
+    },
     container: {
       backgroundColor: '#fff',       
       margin: 10,      
@@ -29,6 +36,10 @@ const styles = StyleSheet.create({
       borderRadius: 30,      
       flexWrap: 'wrap',      
       flexGrow: 1
+    },
+    titulo: {
+        color: '#fff2df', 
+
     },
     innerContainer: {
         backgroundColor: '#fff2df',       
@@ -57,14 +68,7 @@ const styles = StyleSheet.create({
         fontWeight:'regular',
         color: '#e54304',
     },
-    produto: {
-        fontSize: 15,        
-        textAlign: 'left',        
-        fontWeight:'bold',
-        color: '#f47100',
-    },
-  
-    value:{
+    economize:{
         fontSize: 15,        
         color: '#008b00',        
         fontWeight:'bold'
