@@ -1,27 +1,54 @@
-import { Text, StyleSheet, View, Image } from "react-native"
+import { Text, StyleSheet, View, Image, TouchableOpacity, FlatList } from "react-native"
+import React , {useState , useEffect} from "react";
 import { MaterialIcons } from '@expo/vector-icons';
+import database from "../src/config/firebaseconfig";
+import { collection, getDocs } from "firebase/firestore";
 
-export default function CardMercado(props){
-   return (
-    <View style={styles.Outercontainer}>
-        <Text style={styles.titulo}>Mercados por ordem de mais barato</Text>
+export default function CardMercado(props)  {
+    const [mercados, setMercados] = useState([])
+    const mercadosCollectionRef = collection (database,"mercados"); 
+    
+    useEffect(()=>{
+     const getMercados = async () =>{
+        const data = await getDocs(mercadosCollectionRef);
+        console.log(data.docs.map( (doc) => ({...doc.data(), id: doc.id})));
+        setMercados(data.docs.map( (doc) => ({...doc.data(), id: doc.id})));
+    };
+    getMercados();
+    },[]); 
+
+    const Item = ({ mercado, endereco,imagem }) => (
         <View style={styles.container}>
-            
-        <View style={styles.innerContainer}>
-            <View style={styles.iconContainer}>
-                    <Image style={styles.icon} source={props.icon}></Image>
-                </View>
-            
-                <View style={styles.informationContainer}>
-                    <Text style={styles.mercado}>{props.mercado}</Text>
-                    <Text style={styles.endereco}>{props.endereco}</Text>
-                    <Text style={styles.economize}>Economize até {props.economize}%</Text>
+                <View style={styles.innerContainer}>
+                    <View style={styles.iconContainer}>
+                        <Image style={styles.icon} source={imagem}></Image>
+                     </View>
                     
-                </View>
+                    <View style={styles.informationContainer}>
+                        <Text style={styles.mercado}>{mercado}</Text>
+                        <Text style={styles.endereco}>{endereco}</Text>
+                        <Text style={styles.economize}>Economize até {props.economize}%</Text>
+                            
+                    </View>
 
-            </View>
-        </View>   
-    </View>
+                </View>
+         </View>
+      );
+
+      const renderItem = ({ item }) => (
+        <Item mercado={item.mercado} endereco={item.endereco} imagem={item.imagem} />
+      )
+
+    return (
+        <View style={styles.Outercontainer}>
+            <Text style={styles.titulo}>Mercados por ordem de mais barato</Text>
+            <FlatList
+            showsVerticalScrollIndicator={false}
+            data={mercados}
+            renderItem={renderItem}
+            keyExtractor={item=> item.id}
+            />
+        </View>
    )
 }
 const styles = StyleSheet.create({
