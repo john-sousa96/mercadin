@@ -21,12 +21,7 @@ export default function App() {
           > 
         </CardProdutos>
 
-        <CardMercados
-         
-          endereco = {'Rua das Margaridas, 1234, São Paulo - SP'}
-          economize={'10'} 
-          icon={{uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSblfr3-Ei1-R19mSwotmODjlyjhDl0e1S2eIjL9QEwTQc0a8UjzHQE3nqNdb5Wy6T2nBI&usqp=CAU'}}
-        >
+        <CardMercados>
           
          </CardMercados>
 

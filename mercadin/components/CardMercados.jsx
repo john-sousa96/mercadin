@@ -4,9 +4,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import database from "../src/config/firebaseconfig";
 import { collection, getDocs } from "firebase/firestore";
 
-export default function CardMercado(props)  {
+export default function CardMercado()  {
     const [mercados, setMercados] = useState([])
-    const mercadosCollectionRef = collection (database,"mercados"); 
+    const mercadosCollectionRef = collection(database,"mercados"); 
     
     useEffect(()=>{
      const getMercados = async () =>{
@@ -17,7 +17,7 @@ export default function CardMercado(props)  {
     getMercados();
     },[]); 
 
-    const Item = ({ mercado, endereco,imagem }) => (
+    const Item = ({ mercado, endereco,imagem,economize }) => (
         <View style={styles.container}>
                 <View style={styles.innerContainer}>
                     <View style={styles.iconContainer}>
@@ -27,7 +27,7 @@ export default function CardMercado(props)  {
                     <View style={styles.informationContainer}>
                         <Text style={styles.mercado}>{mercado}</Text>
                         <Text style={styles.endereco}>{endereco}</Text>
-                        <Text style={styles.economize}>Economize até {props.economize}%</Text>
+                        <Text style={styles.economize}>Economize até {economize}%</Text>
                             
                     </View>
 
@@ -36,7 +36,7 @@ export default function CardMercado(props)  {
       );
 
       const renderItem = ({ item }) => (
-        <Item mercado={item.mercado} endereco={item.endereco} imagem={item.imagem} />
+        <Item mercado={item.mercado} endereco={item.endereco} imagem={item.imagem} economize={item.economize}  />
       )
 
     return (
@@ -47,6 +47,7 @@ export default function CardMercado(props)  {
             data={mercados}
             renderItem={renderItem}
             keyExtractor={item=> item.id}
+            
             />
         </View>
    )
@@ -55,24 +56,32 @@ const styles = StyleSheet.create({
     Outercontainer: {
         flexDirection: "column",
         flexWrap: 'wrap',
+        backgroundColor: '#fff',       
+        margin: 10,   
+        borderRadius: 30,  
+          
+        
     },
     container: {
-      backgroundColor: '#fff',       
-      margin: 10,      
       flexDirection: "row",      
-      borderRadius: 30,      
+       
       flexWrap: 'wrap',      
       flexGrow: 1
     },
     titulo: {
-        color: '#fff2df', 
+        color: '#e54304',
+        justifyContent: 'center',
+        fontSize: 15,        
+        textAlign: 'center',        
+        fontWeight:'bold',
+
 
     },
     innerContainer: {
         backgroundColor: '#fff2df',       
         margin: 10,      
         flexDirection: "row",      
-        borderRadius: 40,      
+        borderRadius: 20,      
         flexWrap: 'wrap',      
         flexGrow: 1
 
