@@ -22,6 +22,7 @@ const telaLogin = () => {
             console.log("Criou!")
             const user = userCredential.user;
             console.log(user)
+            alert('Registrado com sucesso!')
         })
         .catch(error => {
             console.log(error)
