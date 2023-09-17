@@ -4,61 +4,32 @@ import CardProdutos from './components/CardProdutos';
 import CardBarraPesquisa from './components/CardBarraPesquisa';
 import CardHome from './components/CardHome';
 import CardMercados from './components/CardMercados';
-import { NavigationContainer, DefaultTheme  } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import telaLogin from './components/screen/telaLogin';
+import Home from './components/CardHome';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
+const Stack = createNativeStackNavigator();
 
 function Home({navigation}){
   return (
-      <CardHome></CardHome>
-  );
-}
 
-function Produtos({navigation}){
-  return (
-      <CardProdutos></CardProdutos>
-  );
-}
-
-
-function Root() {
-  const Drawer = createDrawerNavigator();
-  return (
-    <Drawer.Navigator >
-      <Drawer.Screen name="Home" component={Home} options={{
-          headerTintColor: "#fff",
-          headerBackground: () => <View style={{flex: 1, backgroundColor: "#FFA500"}} />,
-        }} />
-      <Drawer.Screen name="Produtos" component={Produtos} options={{
-          headerTintColor: "#fff",
-          headerBackground: () => <View style={{flex: 1, backgroundColor: "#FFA500"}} />,
-        }} />
-     
-    </Drawer.Navigator>
-  );
-}
-
- function App() {
-
-  const Stack = createStackNavigator();
-  return (
     <NavigationContainer>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-       <Stack.Screen
-        name="Root"
-        component={Root}
-       />
-    </Stack.Navigator>
-  </NavigationContainer>
- );
-}
+      <Stack.Navigator>
+        {<Stack.Screen options={{headerShown: false}} name="Login" component={telaLogin} />}
+        {<Stack.Screen name="Home" component={Home} />}
+      </Stack.Navigator>
+    </NavigationContainer>
 
-export default App;
+  );
+}
 
 const styles = StyleSheet.create({
   containerApp: {
     backgroundColor: '#E8E8E8',
   },
 });
+
