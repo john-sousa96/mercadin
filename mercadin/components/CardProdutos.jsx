@@ -1,22 +1,86 @@
-import { Text, StyleSheet, View, Image } from "react-native"
+import { Text, StyleSheet, View, Image,  FlatList, Button } from "react-native"
 import { MaterialIcons } from '@expo/vector-icons';
+import database from "../src/config/firebaseconfig";
+import React, { useState, useEffect, Fragment, useContext } from 'react';
+import {
+  doc,
+  onSnapshot,
+  updateDoc,
+  setDoc,
+  deleteDoc,
+  collection,
+  serverTimestamp,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  limit,
+} from 'firebase/firestore';
+
 
 export default function CardProdutos(props){
-   return (
-    <View style={styles.container}>
-       <View style={styles.innerContainer}>
-        <View style={styles.iconContainer}>
-                <Image style={styles.icon} source={props.icon}></Image>
-            </View>
-        
-            <View style={styles.informationContainer}>
-                <Text style={styles.mercado}>{props.mercado}</Text>
-                <Text style={styles.endereco}>{props.endereco}</Text>
-                <Text style={styles.produto}>{props.produto}</Text>
-                <Text style={styles.value}>R$ {props.value}</Text>
-            </View>
+    const colletionRef = collection(database, 'produtos');
+    const [produtos, setProdutos] = useState([]);
+    const [valor, setValor] = useState([]);
+    const [loading, setLoading] = useState(false);
+    
 
-        </View>
+    useEffect(() => {
+        const q = query(
+          colletionRef,
+          orderBy('valor', 'asc'), 
+        );
+    
+        setLoading(true);
+        const unsub = onSnapshot(q, (querySnapshot) => {
+        const items = [];
+        querySnapshot.forEach((doc) => {
+        items.push({...doc.data(), id: doc.id});
+          
+          });
+          setProdutos(items);
+          console.log(items); 
+          setLoading(false);
+        });
+        return () => {
+          unsub();
+          
+        };
+        
+        
+      }, []);
+
+      const Item = ({id, mercado, endereco, produto, valor, imagem }) => (
+       
+        <View style={styles.innerContainer}>
+         <View style={styles.iconContainer}>
+                 <Image style={styles.icon} source={imagem}></Image>
+             </View>
+         
+             <View style={styles.informationContainer}>
+                 <Text style={styles.mercado}>{mercado}</Text>
+                 <Text style={styles.endereco}>{endereco}</Text>
+                 <Text style={styles.produto}>{produto}</Text>
+                 <Text style={styles.value}>R$ {valor}</Text>
+             </View>
+ 
+         </View>
+      );
+
+      const renderItem = ({ item }) => (
+        <Item id={item.id} mercado={item.mercado} endereco={item.endereco} imagem={item.imagem} produto={item.produto} valor={item.valor}  />
+      )
+
+    
+  
+    return (
+    <View style={styles.container}>
+      <FlatList
+                showsVerticalScrollIndicator={false}
+                data={produtos}
+                renderItem={renderItem}
+                keyExtractor={item=> item.id} />
+        
        
     </View>
    )
@@ -45,7 +109,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     mercado :{
-        fontSize: 20,        
+        fontSize: 15,        
         textAlign: 'left',        
         fontWeight:'bold',
         color: '#e54304',
@@ -58,7 +122,7 @@ const styles = StyleSheet.create({
         color: '#e54304',
     },
     produto: {
-        fontSize: 15,        
+        fontSize: 20,        
         textAlign: 'left',        
         fontWeight:'bold',
         color: '#f47100',
