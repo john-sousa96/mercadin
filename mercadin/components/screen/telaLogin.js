@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, TouchableOpacityBase, View, Image, 
 import React, { useState } from 'react'
 import { KeyboardAvoidingView } from 'react-native-web'
 import { TextInput } from 'react-native-gesture-handler'
-import {firebaseConfig} from '../../firebase'
+import {firebaseConfig} from '../../src/config/firebaseconfig'
 import {initializeApp} from 'firebase/app'
 import {getAuth, createUserWithEmailAndPassword , signInWithEmailAndPassword  } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
