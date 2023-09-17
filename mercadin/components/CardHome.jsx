@@ -1,66 +1,34 @@
-import React, { useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
 import {
   StyleSheet,
   Text,
   SafeAreaView,
   ActivityIndicator,
+  View
 } from "react-native";
-import CardResultadosPesquisa from "./CardResultadosPesquisa";
-import CardBarraPesquisa from "../components/CardBarraPesquisa";
+import { NavigationContainer } from '@react-navigation/native';
 
 
-const Home = () => {
-  const [searchPhrase, setSearchPhrase] = useState("");
-  const [clicked, setClicked] = useState(false);
-  const [fakeData, setFakeData] = useState();
+import CardMercados from './CardMercados';
+import CardBarraPesquisa from "./CardBarraPesquisa";
+import { clickProps } from "react-native-web/dist/cjs/modules/forwardedProps";
 
-  // get data from the fake api endpoint
-  useEffect(() => {
-    const getData = async () => {
-      const apiResponse = await fetch(
-        "https://my-json-server.typicode.com/kevintomas1995/logRocket_searchBar/languages"
-      );
-      const data = await apiResponse.json();
-      setFakeData(data);
-    };
-    getData();
-  }, []);
+
+
+const Home = ({ navigation }) => {
+ 
 
   return (
-    <SafeAreaView style={styles.root}>
-      {!clicked && <Text style={styles.title}></Text>}
-      <CardBarraPesquisa
-        searchPhrase={searchPhrase}
-        setSearchPhrase={setSearchPhrase}
-        clicked={clicked}
-        setClicked={setClicked}
-      />
-      
-        <CardResultadosPesquisa 
-            searchPhrase={searchPhrase}
-            data={fakeData}
-            setClicked={setClicked}
-          />
-      
-
-          
-
-    </SafeAreaView>
+    <View>
+      <CardBarraPesquisa></CardBarraPesquisa>
+      <CardMercados></CardMercados>
+    </View>
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
-  root: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  title: {
-    width: "100%",
-    marginTop: 20,
-    fontSize: 25,
-    fontWeight: "bold",
-    marginLeft: "10%",
-  },
+ 
 });

@@ -1,9 +1,11 @@
-/**
- * @format
- */
+const express  = require('express');
+const server = express();
+const filmes = require('.src/data/teste.json');
 
-import {AppRegistry} from 'react-native';
-import App from './App';
-import {name as appName} from './app.json';
+server.get('/', (req, res)=> {
+    return res.json(filmes)
+});
 
-AppRegistry.registerComponent(appName, () => App);
+server.listen(3000, () => {
+    console.log('Servidor está funcionando...')
+});
