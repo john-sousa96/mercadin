@@ -73,7 +73,7 @@ export default function CardMercado()  {
         <View style={styles.container}>
                 <View style={styles.innerContainer}>
                     <View style={styles.iconContainer}>
-                        <Image style={styles.icon} ></Image>
+                        <Image style={styles.icon} source={imagem} ></Image>
                      </View>
                     
                     <View style={styles.informationContainer}>
